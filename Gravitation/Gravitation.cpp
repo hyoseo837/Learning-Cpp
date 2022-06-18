@@ -80,7 +80,7 @@ int main()
 
 
     planet earth(1, 6.371e6, 5.972e24, sf::Vector2f(500.f/ratio , 500.f / ratio),sf::Color(66, 164, 245,255), sf::Vector2f());
-    planet moon(1, 1.7374e6, 7.348e22, sf::Vector2f(500.f / ratio - 384472282, 500.f / ratio), sf::Color(190, 199, 207,255), sf::Vector2f(0,722));
+    planet moon(1, 1.7374e6, 7.348e22, sf::Vector2f(500.f / ratio - 384472282, 500.f / ratio), sf::Color(190, 199, 207,255), sf::Vector2f(0,1022));
 
 
     while (window.isOpen())

@@ -63,7 +63,6 @@ public:
         else
         {
             accA = sf::Vector2f();
-            velocity = (velocity + a.velocity) * 0.5f;
         }
         if (dB > radius + b.radius) {
             accB = vec_mult((b.position - position), b.field_strength(position));
@@ -72,7 +71,6 @@ public:
         else
         {
             accB = sf::Vector2f();
-            velocity = (velocity + b.velocity) * 0.5f;
         }
         acceleration = accA + accB;
 
