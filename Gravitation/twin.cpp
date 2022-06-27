@@ -2,7 +2,7 @@
 
 const float G = 6.67430e-11;
 const float Pi = 3.14159;
-const float ratio = 1e-6;
+const float ratio = 1e-7;
 
 
 float pythago(float x, float y) {
@@ -92,9 +92,9 @@ int main()
     tmp_text.setFont(open_sans);
 
 
-    planet ash(1, 6.371e6, 5.972e24, sf::Vector2f(500.f / ratio + 100000000, 500.f / ratio), sf::Color(66, 164, 245, 255), sf::Vector2f());
-    planet ember(1, 6.371e6, 5.972e24, sf::Vector2f(500.f / ratio - 100000000, 500.f / ratio), sf::Color(235, 64, 52, 255), sf::Vector2f());
-    planet moon(1, 6.371e6, 5.972e24, sf::Vector2f(500.f / ratio, 500.f / ratio - 100000000), sf::Color(170, 66, 245, 255), sf::Vector2f());
+    planet sun(1, 6.963e8, 1.989e30, sf::Vector2f(500 / ratio, 500 / ratio), sf::Color(253, 184, 19, 255), sf::Vector2f());
+    planet earth(2, 6.371e6, 5.972e24, sf::Vector2f(500.f / ratio - 152.08e9, 500.f / ratio), sf::Color(235, 64, 52, 255), sf::Vector2f());
+    planet moon(3, 6.371e6, 5.972e24, sf::Vector2f(500.f / ratio - 152.08e9 - 3844e5, 500.f / ratio), sf::Color(170, 66, 245, 255), sf::Vector2f());
 
 
     while (window.isOpen())
@@ -108,19 +108,19 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        ash.update();
-        ember.update();
+        sun.update();
+        earth.update();
         moon.update();
-        ember.net_force(ash,moon);
-        ash.net_force(ember, moon);
-        moon.net_force(ember, ash);
+        sun.net_force(earth,moon);
+        earth.net_force(sun, moon);
+        moon.net_force(sun, earth);
         tmp_text.setString(std::to_string(t / 86400) + " days");
 
         if ((t / 3600) * 3600 == t) {
             window.clear();
             window.draw(tmp_text);
-            window.draw(ember.shape);
-            window.draw(ash.shape);
+            window.draw(sun.shape);
+            window.draw(earth.shape);
             window.draw(moon.shape);
             window.display();
         }
