@@ -1,4 +1,49 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+
+class complexNum 
+{
+private:
+public:
+    float real;
+    float imaginary;
+    complexNum (float realN, float imginN)
+    {
+    real = realN;
+    imaginary = imginN;
+    }
+
+    std::string print() {
+        return std::to_string(real) + " + " + std::to_string(imaginary) + " i";
+    }
+
+};
+
+complexNum Cadd(complexNum a, complexNum b) {
+    complexNum foo(a.real + b.real, a.imaginary + b.imaginary);
+    return foo;
+}
+
+complexNum Csub(complexNum a, complexNum b) {
+    complexNum foo(a.real - b.real, a.imaginary - b.imaginary);
+    return foo;
+}
+
+complexNum Creciprocal(complexNum a) {
+    float dno = a.real * a.real + a.imaginary * a.imaginary;
+    complexNum foo(a.real / dno, -a.imaginary / dno);
+    return foo;
+}
+
+complexNum Ctime(complexNum a, complexNum b) {
+    complexNum foo(a.real * b.real - a.imaginary * b.imaginary, a.imaginary * b.real + a.real * b.imaginary);
+    return foo;
+}
+
+complexNum Cmult(complexNum a, float b) {
+    complexNum foo(a.real*b, a.imaginary*b);
+    return foo;
+}
 
 int coloring(int i, int j, int roots[3][2]) {
 
@@ -31,23 +76,32 @@ int main()
 
     int roots[3][2] = { {100,200},{200,200},{300,200} };
 
-    int pixels[400][400];
+    complexNum kkk(2, 2);
+    complexNum ppp(1, 3);
+    complexNum rrr(0, 0);
+    rrr = Ctime(kkk,ppp);
+
+    std::cout << kkk.print() << std::endl;
+    std::cout << ppp.print() << std::endl;
+    std::cout << rrr.print() << std::endl;
+
+    /*int pixels[400][400];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
             pixels[i][j] = coloring(i, j, roots);
         }
-    }
+    }*/
 
     sf::Image image;
     image.create(size, size, sf::Color::Yellow);
 
-    for (int i = 0; i < size; i++) {
+    /*for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
             image.setPixel(i, j, sf::Color(pixels[i][j], pixels[i][j], pixels[i][j], 255));
         }
-    }
+    }*/
     image.setPixel(100, 200, sf::Color(255, 0, 0, 255));
     image.setPixel(200, 200, sf::Color(0, 255, 0, 255));
     image.setPixel(300, 200, sf::Color(0, 0, 255, 255));
