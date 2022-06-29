@@ -63,7 +63,7 @@ int coloring(double i, double j, double roots[3][2]) {
         return 250;
     }
 
-    std::cout << std::to_string(distances[0]) + "  " + std::to_string(distances[1]) + "  " + std::to_string(distances[2]) << std::endl;
+    std::cout << std::to_string(i) + ",  " + std::to_string(j) + " : " + std::to_string(distances[0]) + "  " + std::to_string(distances[1]) + "  " + std::to_string(distances[2]) << std::endl;
     return 0;
 }
 
