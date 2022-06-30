@@ -1,5 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
+#include "image.h"
+#include <string>
 
 class complexNum 
 {
@@ -71,64 +72,37 @@ int coloring(double i, double j, double roots[3][2]) {
 int main()
 {
     int t = 0;
-    sf::RenderWindow window(sf::VideoMode(400, 400), "Newton's fractal!");
-    int size = 400;
+    int size = 500;
     complexNum one(1, 0);
 
     double roots[3][2] = { {1,0},{-0.5,sqrt(3)/2},{0.5,-sqrt(3)/2}};
 
-    int pixels[400][400];
+    int pixels[500][500];
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
-            complexNum z(static_cast<float>(i - 200)/200, static_cast<float>(j - 200)/200);
+            complexNum z(static_cast<float>(i - size/2)/50, static_cast<float>(j - size/2)/50);
             complexNum grad(0,0);
-            grad = Ctime(Csub(Ctime(Ctime(z,z),z),one),Creciprocal(Cmult(Ctime(z,z), 3)));
+            grad = Ctime(Csub(Ctime(Ctime(z, z), z), one), Creciprocal(Cmult(Ctime(z, z), 3)));
             z = Csub(z, grad);
+           
             pixels[i][j] = coloring(z.real, z.imaginary, roots);
 
         }
     }
+    
+    const int width = 500;
+    const int height = 500;
+    
+    image image(width, height);
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
 
-    sf::Image image;
-    image.create(size, size, sf::Color::Yellow);
-
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++)
-        {
-            image.setPixel(i, j, sf::Color(pixels[i][j], pixels[i][j], pixels[i][j], 255));
-        }
-    }
-    image.setPixel(400, 200, sf::Color(255, 0, 0, 255));
-    image.setPixel(100, 373, sf::Color(0, 255, 0, 255));
-    image.setPixel(100, 27, sf::Color(0, 0, 255, 255));
-
-    sf::Texture texture;
-    texture.loadFromImage(image);
-
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setPosition(0, 0);
-    image.saveToFile("E:/sfmlimage.bmp");
-
-    while (window.isOpen())
-    {
-        window.setFramerateLimit(1);
-        t++;
-
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        if ((t / 36000) * 36000 == t) {
-            window.clear();
-            window.draw(sprite);
-            window.display();
+            image.SetColor(Color((float)pixels[x][y] / 255.f, (float)pixels[x][y] / 255.f, (float)pixels[x][y] / 255.f), x, y);
         }
     }
 
+    image.Export("E:/testtest.bmp");
+    
     return 0;
 }
