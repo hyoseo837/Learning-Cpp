@@ -74,6 +74,7 @@ int main()
     int t = 0;
     int size = 500;
     complexNum one(1, 0);
+    int iteration = 20;
 
     double roots[3][2] = { {1,0},{-0.5,sqrt(3)/2},{0.5,-sqrt(3)/2}};
 
@@ -81,10 +82,12 @@ int main()
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
-            complexNum z(static_cast<float>(i - size/2)/50, static_cast<float>(j - size/2)/50);
+            complexNum z(static_cast<float>(i - size/2)/200, static_cast<float>(j - size/2)/200);
             complexNum grad(0,0);
-            grad = Ctime(Csub(Ctime(Ctime(z, z), z), one), Creciprocal(Cmult(Ctime(z, z), 3)));
-            z = Csub(z, grad);
+            for (int h = 0; h < iteration; h++) {
+                grad = Ctime(Csub(Ctime(Ctime(z, z), z), one), Creciprocal(Cmult(Ctime(z, z), 3)));
+                z = Csub(z, grad);
+            }
            
             pixels[i][j] = coloring(z.real, z.imaginary, roots);
 
