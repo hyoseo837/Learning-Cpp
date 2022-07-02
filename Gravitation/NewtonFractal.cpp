@@ -71,37 +71,43 @@ int coloring(double i, double j, double roots[3][2]) {
 
 int main()
 {
+
+    // variables that you can change
+    int size = 1000;
+    int zoom = 50;
+    int iteration = 5;
+    float position[2] = {0.1,0.5};
+
+    // system, constant
     int t = 0;
-    int size = 500;
-    complexNum one(1, 0);
-    int iteration = 20;
+    const complexNum one(1, 0);
 
     double roots[3][2] = { {1,0},{-0.5,sqrt(3)/2},{0.5,-sqrt(3)/2}};
 
-    int pixels[500][500];
+    int* pixels = new int[1000000]; // should be square of size
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {
-            complexNum z(static_cast<float>(i - size/2)/200, static_cast<float>(j - size/2)/200);
+            complexNum z(static_cast<float>(i - (size * position[0])) / zoom, static_cast<float>(j - (size * position[1])) / zoom);
             complexNum grad(0,0);
             for (int h = 0; h < iteration; h++) {
                 grad = Ctime(Csub(Ctime(Ctime(z, z), z), one), Creciprocal(Cmult(Ctime(z, z), 3)));
                 z = Csub(z, grad);
             }
            
-            pixels[i][j] = coloring(z.real, z.imaginary, roots);
+            pixels[i*size+j] = coloring(z.real, z.imaginary, roots);
 
         }
     }
     
-    const int width = 500;
-    const int height = 500;
+    const int width = size;
+    const int height = size;
     
     image image(width, height);
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
 
-            image.SetColor(Color((float)pixels[x][y] / 255.f, (float)pixels[x][y] / 255.f, (float)pixels[x][y] / 255.f), x, y);
+            image.SetColor(Color((float)pixels[x*size+y] / 255.f, (float)pixels[x * size + y] / 255.f, (float)pixels[x * size + y] / 255.f), x, y);
         }
     }
 
