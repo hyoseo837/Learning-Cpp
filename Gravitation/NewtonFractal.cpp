@@ -59,17 +59,17 @@ int coloring(double i, double j, double roots[3][2], complexNum origin,float rat
     {
         odistances[k] = (roots[k][0] - origin.real) * (roots[k][0] - origin.real) + (roots[k][1] - origin.imaginary) * (roots[k][1] - origin.imaginary);
     }
-    if (odistances[0] < 5/(ratio*ratio) or odistances[1] < 5/(ratio*ratio) or odistances[2] < 5 / (ratio * ratio)){
-        return 255;
+    if (odistances[0] < 10/(ratio*ratio) or odistances[1] < 10/(ratio*ratio) or odistances[2] < 10 / (ratio * ratio)){
+        return 0;
     }
     if (distances[0] < distances[1] and distances[0] < distances[2]) {
-        return 50;
+        return 1;
     }
     if (distances[1] < distances[0] and distances[1] < distances[2]) {
-        return 100;
+        return 2;
     }
     if (distances[2] < distances[0] and distances[2] < distances[1]) {
-        return 150;
+        return 3;
     }
 
     std::cout << std::to_string(i) + ",  " + std::to_string(j) + " : " + std::to_string(distances[0]) + "  " + std::to_string(distances[1]) + "  " + std::to_string(distances[2]) << std::endl;
@@ -82,9 +82,10 @@ int main()
 
     // variables that you can change
     int size = 1000;
-    int ratio = 300;
-    int iteration = 50;
-    float position[2] = {0.5,0.5};
+    int ratio = 200;
+    int iteration = 1;
+    float origin[2] = {0.5,0.5};
+    Color color_list[4] = { Color(0,0,0),Color(0.9294,0.1098,0.1412),Color(0.1333,0.6941,0.298),Color(0.0,0.502,1.0) };
 
     // system, constant
     int t = 0;
@@ -96,7 +97,7 @@ int main()
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++)
         {   
-            complexNum z(static_cast<float>(i - (size * position[0])) / ratio, static_cast<float>(j - (size * position[1])) / ratio);
+            complexNum z(static_cast<float>(i - (size * origin[0])) / ratio, static_cast<float>(j - (size * origin[1])) / ratio);
             complexNum o(z.real, z.imaginary);
             complexNum grad(0,0);
             for (int h = 0; h < iteration; h++) {
@@ -118,7 +119,25 @@ int main()
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
 
-            image.SetColor(Color((float)pixels[x*size+y] / 255.f, (float)pixels[x * size + y] / 255.f, (float)pixels[x * size + y] / 255.f), x, y);
+            image.SetColor(color_list[pixels[x * size + y]], x, y);
+        }
+    }
+
+    int cnt = 25;
+    for (int kkk = 0; kkk < size; kkk++)
+    {
+        image.SetColor(Color(1, 1, 1), kkk, 500);
+        image.SetColor(Color(1, 1, 1), 500, kkk);
+        if (cnt++ == 25) {
+            image.SetColor(Color(1, 1, 1), kkk, 501);
+            image.SetColor(Color(1, 1, 1), 501, kkk);
+            image.SetColor(Color(1, 1, 1), kkk, 502);
+            image.SetColor(Color(1, 1, 1), 502, kkk);
+            image.SetColor(Color(1, 1, 1), kkk, 503);
+            image.SetColor(Color(1, 1, 1), 503, kkk);
+            image.SetColor(Color(1, 1, 1), kkk, 504);
+            image.SetColor(Color(1, 1, 1), 504, kkk);
+            cnt -= 25;
         }
     }
 
