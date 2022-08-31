@@ -39,6 +39,9 @@
     <ClCompile Include="NewtonFracatal3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dimension_4roots.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">

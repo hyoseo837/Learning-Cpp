@@ -44,7 +44,7 @@ void image::Export(const char* path) const
 	f.open(path, std::ios::out | std::ios::binary);
 
 	if (!f.is_open()) {
-		std::cout << "File could not be opened";
+		std::cout << "File could not be opened\n";
 		return;
 	}
 
@@ -148,5 +148,5 @@ void image::Export(const char* path) const
 	}
 
 	f.close();
-	std::cout << "File created";
+	std::cout << "File created\n";
 }
