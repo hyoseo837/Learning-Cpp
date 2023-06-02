@@ -42,6 +42,15 @@
     <ClCompile Include="dimension_4roots.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dimension_5roots.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dimension_6roots.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tworoots.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="image.h">

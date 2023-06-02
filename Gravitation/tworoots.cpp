@@ -83,7 +83,7 @@ int main()
     int t = 0;
     const complexNum one(1, 0);
 
-    double roots[3][2] = { {1,0},{-0.5,sqrt(3) / 2},{-0.5,-sqrt(3) / 2} };
+    double roots[2][2] = { {1,0},{-1,0} };
 
     int* pixels = new int[4000000]; // should be square of size
     for (int i = 0; i < size; i++) {
@@ -93,26 +93,26 @@ int main()
             complexNum o(z.real, z.imaginary);
             complexNum grad(0, 0);
             for (int h = 0; h < iteration; h++) {
-                grad = Ctime(Csub(Ctime(Ctime(z, z), z), one), Creciprocal(Cmult(Ctime(z, z), 3)));
+                grad = Ctime(Csub(Ctime(z, z), one), Creciprocal(Cmult(z, 2)));
                 z = Csub(z, grad);
             }
 
             pixels[i * size + j] = coloring(z.real, z.imaginary, roots, ratio);
         }
-        if (i % (size/20) == 0) {
+        if (i % (size / 20) == 0) {
             std::cout << std::to_string(i * 100 / size) + "% done " << std::endl;
         }
     }
 
-    const int width = size/2;
-    const int height = size/2;
+    const int width = size / 2;
+    const int height = size / 2;
     int blk_count = 0;
 
     image image(width, height);
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            if (pixels[2 * x * size + 2 * y] == pixels[(2 * x + 1) * size + (2 * y)]&& 
-                pixels[2 * x * size + 2 * y] == pixels[(2 * x) * size + (2 * y + 1)]&& 
+            if (pixels[2 * x * size + 2 * y] == pixels[(2 * x + 1) * size + (2 * y)] &&
+                pixels[2 * x * size + 2 * y] == pixels[(2 * x) * size + (2 * y + 1)] &&
                 pixels[2 * x * size + 2 * y] == pixels[(2 * x + 1) * size + (2 * y + 1)]) {
                 image.SetColor(color_list[0], x, y);
             }
@@ -125,7 +125,7 @@ int main()
     }
 
 
-    image.Export("C:/Users/효서/Desktop/Fractals/Newton_dimension1.bmp");
+    image.Export("C:/Users/효서/Desktop/Fractals/Newton_dimension_2roots.bmp");
     std::cout << std::to_string(blk_count) + " pixels " << std::endl;
 
     return 0;
