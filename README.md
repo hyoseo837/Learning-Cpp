@@ -2,7 +2,7 @@
 SFML C++ study
 
 # How to try Newton's fractal program
-1. Download NewtonFractal.cpp and image.h
+1. Download Gravitation/NewtonFractal.cpp and image.h
 2. run it on the Visual Studio
 
 # How to try orbital motion simulator
